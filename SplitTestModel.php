@@ -65,9 +65,7 @@ class SplitTestModel
         $this->_splitKey = !empty($key) ? $key : $_SERVER['REMOTE_ADDR'];
 
         //set config
-        if(is_file($this->_config_path)) {
-            $this->_config = require($this->_config_path);
-        }
+        $this->_loadConfig();
     }
 
 
@@ -135,5 +133,16 @@ class SplitTestModel
 
     }
 
+    protected function _loadConfig()
+    {
+        if (is_file($this->_config_path))
+        {
+            $config = require($this->_config_path);
+            if (is_array($config))
+            {
+                $this->_config = $config;
+            }
+        }
+    }
 
 }
